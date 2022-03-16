@@ -20,22 +20,16 @@ public class VehicleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<VehicleDto> getVehicleById(@PathVariable("id") Long id){
-
-          VehicleDto dto =  service.getVehicleById(id);
-
-        return new ResponseEntity(dto,HttpStatus.OK);
+        return new ResponseEntity(service.getVehicleById(id),HttpStatus.OK);
     }
 
     @PostMapping()
     public ResponseEntity<VehicleDto> saveVehicle(@RequestBody VehicleDto dto){
-         VehicleDto savedDto = service.saveVehicle(dto);
-
-        return  new ResponseEntity<>(savedDto,HttpStatus.CREATED);
+        return  new ResponseEntity<>(service.saveVehicle(dto),HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<Vehicle>> getAllVehicles(){
-
         return new ResponseEntity<>(service.getAllVehicles(),HttpStatus.OK);
     }
 
