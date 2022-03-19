@@ -26,13 +26,10 @@ public class VehicleServiceImpl implements VehicleService {
         Optional<Vehicle> vehicle= repository.findById(id);
         return vehicle.map(mapper::vehicleToVehicleDto).orElse(null);
     }
-
     @Override
     public VehicleDto saveVehicle(VehicleDto vehicleDto) {
 
-        Vehicle savedVehicle = mapper.vehicleDtoToVehicle(vehicleDto);
-
-        return mapper.vehicleToVehicleDto(repository.save(savedVehicle));
+        return mapper.vehicleToVehicleDto(repository.save(mapper.vehicleDtoToVehicle(vehicleDto)));
     }
 
     @Override

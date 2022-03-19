@@ -29,13 +29,10 @@ class VehicleControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private VehicleService service;
-
     @Autowired
     private ObjectMapper mapper;
-
 
     @Test
     void getVehicleById() throws Exception {
@@ -79,7 +76,6 @@ class VehicleControllerTest {
                         is(vehicle.getType())))
                 .andExpect(jsonPath("price",
                         is(250000)));
-
     }
 
     @Test
