@@ -7,7 +7,7 @@ import java.util.*;
 
 public interface VehicleService {
 
-    VehicleDto getVehicleById(Long id);
+    Optional<VehicleDto> getVehicleById(Long id);
 
     VehicleDto saveVehicle(VehicleDto vehicleDto);
 

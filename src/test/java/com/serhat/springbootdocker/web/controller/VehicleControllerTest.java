@@ -6,6 +6,9 @@ import com.serhat.springbootdocker.entity.*;
 import com.serhat.springbootdocker.service.*;
 import com.serhat.springbootdocker.web.dto.*;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.*;
 import org.springframework.boot.test.mock.mockito.*;
@@ -39,7 +42,7 @@ class VehicleControllerTest {
         long id = 1L;
         VehicleDto dto = VehicleDto.builder().modal("renault").price(new BigDecimal(250000)).type("sedan").build();
 
-        given(service.getVehicleById(id)).willReturn(dto);
+        given(service.getVehicleById(id)).willReturn(Optional.of(dto));
 
         ResultActions response = mockMvc.perform(get("/api/v1/vehicles/{id}",id));
 
@@ -51,6 +54,20 @@ class VehicleControllerTest {
                         is(dto.getType())))
                 .andExpect(jsonPath("price",
                         is(250000)));
+    }
+
+    @Test
+    void getInvalidId() throws Exception {
+        long id = 1L;
+        VehicleDto dto = VehicleDto.builder().modal("renault").price(new BigDecimal(250000)).type("sedan").build();
+
+        given(service.getVehicleById(id)).willReturn(Optional.empty());
+
+        ResultActions response = mockMvc.perform(get("/api/v1/vehicles/{id}",id));
+
+
+        response.andExpect(status().isNotFound())
+                .andDo(print());
     }
 
     @Test

@@ -6,7 +6,6 @@ import com.serhat.springbootdocker.service.*;
 import com.serhat.springbootdocker.web.dto.*;
 import com.serhat.springbootdocker.web.mappers.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;
@@ -21,9 +20,9 @@ public class VehicleServiceImpl implements VehicleService {
     private final VehicleMapper mapper;
 
     @Override
-    public VehicleDto getVehicleById(Long id)  {
+    public Optional<VehicleDto> getVehicleById(Long id)  {
         Optional<Vehicle> vehicle= repository.findById(id);
-        return vehicle.map(mapper::vehicleToVehicleDto).orElse(null);
+        return vehicle.map(mapper::vehicleToVehicleDto);
     }
     @Override
     public VehicleDto saveVehicle(VehicleDto vehicleDto) {
