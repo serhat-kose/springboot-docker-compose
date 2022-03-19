@@ -22,7 +22,6 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public VehicleDto getVehicleById(Long id)  {
-
         Optional<Vehicle> vehicle= repository.findById(id);
         return vehicle.map(mapper::vehicleToVehicleDto).orElse(null);
     }
