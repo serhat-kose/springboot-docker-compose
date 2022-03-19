@@ -11,7 +11,7 @@ public interface VehicleService {
 
     VehicleDto saveVehicle(VehicleDto vehicleDto);
 
-    List<Vehicle> getAllVehicles();
+    List<VehicleDto> getAllVehicles();
 
 
 

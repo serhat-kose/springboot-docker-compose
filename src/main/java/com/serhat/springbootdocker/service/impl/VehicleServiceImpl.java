@@ -36,8 +36,16 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public List<Vehicle> getAllVehicles() {
+    public List<VehicleDto> getAllVehicles() {
+          List<Vehicle> entityList =  repository.findAll();
 
-        return repository.findAll();
+          if(!entityList.isEmpty()){
+              List<VehicleDto> dtoList = new ArrayList<>();
+              for (Vehicle vehicle:entityList) {
+                  dtoList.add( mapper.vehicleToVehicleDto(vehicle));
+              }
+              return dtoList;
+          }
+        return Collections.emptyList();
     }
 }
