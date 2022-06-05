@@ -1,20 +1,31 @@
-version: "3.7"
+version: '3'
+
 services:
-  api_service:
-    build: .
-    restart: always
+  db:
+    image: "postgres"
     ports:
-      - "9090:9090"
-    depends_on:
-      - maria_db
-    command: sh -c './wait-for mysql_db:3306 -- npm start'
-  maria_db:
-    image: "mariadb:10.5.8"
-    restart: always
-    ports:
-      - "3307:3306"
+      - "5432:5432"
     environment:
-      MYSQL_DATABASE: vehicledb
-      MYSQL_USER: root
-      MYSQL_PASSWORD:
-      MYSQL_ROOT_PASSWORD:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 199425
+  cache:
+    image: "redis"
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db/vehicles
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 199425
+      SPRING_REDIS_HOST: cache
+      SPRING_REDIS_PORT: 6379
+    depends_on:
+      - db
+      - cache
