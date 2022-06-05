@@ -42,7 +42,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/vehicles
     username: postgres
-    password:
+    password: 199425
 server:
   port: 8080
 
